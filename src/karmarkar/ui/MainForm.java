@@ -15,6 +15,7 @@ import javax.swing.UIManager;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 
 public class MainForm extends JFrame {
 
@@ -61,14 +62,18 @@ public class MainForm extends JFrame {
 
 		JButton btnNewButton = new JButton("Load");
 
-		JButton btnNewButton_1 = new JButton("New button");
+		JButton btnNewButton_1 = new JButton("Iteration");
 
-		JButton btnNewButton_2 = new JButton("New button");
+		JButton btnNewButton_2 = new JButton("Solve");
 
 		textField = new JTextField();
+		textField.setHorizontalAlignment(SwingConstants.RIGHT);
+		textField.setText("0.0001");
 		textField.setColumns(10);
 
 		textField_1 = new JTextField();
+		textField_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		textField_1.setText("500");
 		textField_1.setColumns(10);
 
 		JLabel lblNewLabel = new JLabel("Presicion");
