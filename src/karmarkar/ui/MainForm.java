@@ -19,116 +19,116 @@ import javax.swing.SwingConstants;
 
 public class MainForm extends JFrame {
 
-	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
+    private JPanel contentPane;
+    private JTextField textField;
+    private JTextField textField_1;
+    Configuration config = new Configuration("config.properties");
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					MainForm frame = new MainForm();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    /**
+     * Launch the application.
+     */
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    MainForm frame = new MainForm();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
-	/**
-	 * Create the frame.
-	 */
-	public MainForm() {
-		try {
-			UIManager.setLookAndFeel(
-					UIManager.getSystemLookAndFeelClassName());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 820, 524);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		setContentPane(contentPane);
+    /**
+     * Create the frame.
+     */
+    public MainForm() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 820, 524);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        contentPane.setLayout(new BorderLayout(0, 0));
+        setContentPane(contentPane);
 
-		JPanel panel = new JPanel();
-		panel.setForeground(Color.BLACK);
-		contentPane.add(panel, BorderLayout.WEST);
+        JPanel panel = new JPanel();
+        panel.setForeground(Color.BLACK);
+        contentPane.add(panel, BorderLayout.WEST);
 
-		JButton btnNewButton = new JButton("Load");
+        JButton btnNewButton = new JButton("Load");
 
-		JButton btnNewButton_1 = new JButton("Iteration");
+        JButton btnNewButton_1 = new JButton("Iteration");
 
-		JButton btnNewButton_2 = new JButton("Solve");
+        JButton btnNewButton_2 = new JButton("Solve");
 
-		textField = new JTextField();
-		textField.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField.setText("0.0001");
-		textField.setColumns(10);
+        textField = new JTextField();
+        textField.setHorizontalAlignment(SwingConstants.RIGHT);
+        textField.setText(config.getPrecision());
+        textField.setColumns(10);
 
-		textField_1 = new JTextField();
-		textField_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		textField_1.setText("500");
-		textField_1.setColumns(10);
+        textField_1 = new JTextField();
+        textField_1.setHorizontalAlignment(SwingConstants.RIGHT);
+        textField_1.setText(config.getMaxIterations());
+        textField_1.setColumns(10);
 
-		JLabel lblNewLabel = new JLabel("Presicion");
+        JLabel lblNewLabel = new JLabel("Presicion");
 
-		JLabel lblNewLabel_1 = new JLabel("Max iterations");
-		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-				gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-										.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-												.addComponent(textField, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-												.addGap(20))
-										.addGroup(gl_panel.createSequentialGroup()
-												.addComponent(textField_1, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-												.addGap(20))
-										.addGroup(gl_panel.createSequentialGroup()
-												.addComponent(lblNewLabel)
-												.addContainerGap(72, Short.MAX_VALUE))
-										.addGroup(gl_panel.createSequentialGroup()
-												.addComponent(lblNewLabel_1)
-												.addContainerGap(72, Short.MAX_VALUE))
-										.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
-												.addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
-														.addComponent(btnNewButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
-														.addComponent(btnNewButton_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
-														.addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
-												.addGap(20))))
-		);
-		gl_panel.setVerticalGroup(
-				gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-								.addContainerGap()
-								.addComponent(btnNewButton)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(btnNewButton_1)
-								.addPreferredGap(ComponentPlacement.UNRELATED)
-								.addComponent(btnNewButton_2)
-								.addGap(21)
-								.addComponent(lblNewLabel)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addGap(10)
-								.addComponent(lblNewLabel_1)
-								.addPreferredGap(ComponentPlacement.RELATED)
-								.addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addContainerGap(232, Short.MAX_VALUE))
-		);
-		panel.setLayout(gl_panel);
+        JLabel lblNewLabel_1 = new JLabel("Max iterations");
+        GroupLayout gl_panel = new GroupLayout(panel);
+        gl_panel.setHorizontalGroup(
+                gl_panel.createParallelGroup(Alignment.LEADING)
+                        .addGroup(gl_panel.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+                                        .addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+                                                .addComponent(textField, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                                                .addGap(20))
+                                        .addGroup(gl_panel.createSequentialGroup()
+                                                .addComponent(textField_1, GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
+                                                .addGap(20))
+                                        .addGroup(gl_panel.createSequentialGroup()
+                                                .addComponent(lblNewLabel)
+                                                .addContainerGap(72, Short.MAX_VALUE))
+                                        .addGroup(gl_panel.createSequentialGroup()
+                                                .addComponent(lblNewLabel_1)
+                                                .addContainerGap(72, Short.MAX_VALUE))
+                                        .addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+                                                .addGroup(gl_panel.createParallelGroup(Alignment.TRAILING)
+                                                        .addComponent(btnNewButton, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                                                        .addComponent(btnNewButton_2, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                                                        .addComponent(btnNewButton_1, GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE))
+                                                .addGap(20))))
+        );
+        gl_panel.setVerticalGroup(
+                gl_panel.createParallelGroup(Alignment.LEADING)
+                        .addGroup(gl_panel.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btnNewButton)
+                                .addPreferredGap(ComponentPlacement.UNRELATED)
+                                .addComponent(btnNewButton_1)
+                                .addPreferredGap(ComponentPlacement.UNRELATED)
+                                .addComponent(btnNewButton_2)
+                                .addGap(21)
+                                .addComponent(lblNewLabel)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addGap(10)
+                                .addComponent(lblNewLabel_1)
+                                .addPreferredGap(ComponentPlacement.RELATED)
+                                .addComponent(textField_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(232, Short.MAX_VALUE))
+        );
+        panel.setLayout(gl_panel);
 
-		JTextPane txtpnProblemLoaded = new JTextPane();
-		txtpnProblemLoaded.setContentType("text/html");
-		txtpnProblemLoaded.setText("Problem loaded<br/>....<br/>Iteration 1<br/>Iteration 2<br/><br/>Problem solved!");
-		txtpnProblemLoaded.setEditable(false);
-		contentPane.add(txtpnProblemLoaded, BorderLayout.CENTER);
-	}
+        JTextPane txtpnProblemLoaded = new JTextPane();
+        txtpnProblemLoaded.setContentType("text/html");
+        txtpnProblemLoaded.setText(config.getOutputText());
+        txtpnProblemLoaded.setEditable(false);
+        contentPane.add(txtpnProblemLoaded, BorderLayout.CENTER);
+    }
 }
