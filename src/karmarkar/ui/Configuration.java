@@ -26,4 +26,8 @@ public class Configuration extends Properties {
     public String getMaxIterations() {
         return getProperty("ui.max-iterations");
     }
+
+    public String getKernelPath() {
+        return getProperty("kernel-path");
+    }
 }
