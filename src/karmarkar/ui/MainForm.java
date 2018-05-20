@@ -72,8 +72,11 @@ public class MainForm extends JFrame {
 
     private void displayLP(LinearProblem lp) {
         clearPane();
-        writeLineToPane("123");
-        writeLineToPane("123");
+        writeLineToPane("Objective = " );
+        writeLineToPane(lp.getObjectiveAsString());
+        writeLineToPane("");
+        writeLineToPane("Constraints, matrix A =");
+        writeLineToPane(lp.getConstraintsAsString());
     }
 
     /**
@@ -181,10 +184,11 @@ public class MainForm extends JFrame {
         panel.setLayout(gl_panel);
 
         txtpnProblemLoaded = new JTextPane();
-        txtpnProblemLoaded.setContentType("text/html");
-//        doc = new DefaultStyledDocument();
-//        txtpnProblemLoaded.setDocument(doc);
+//        txtpnProblemLoaded.setContentType("text/html");
+////        doc = new DefaultStyledDocument();
+////        txtpnProblemLoaded.setDocument(doc);
         doc=txtpnProblemLoaded.getDocument();
+        txtpnProblemLoaded.setFont(new Font("Consolas", Font.PLAIN, 18));
         writeLineToPane(config.getOutputText());
         txtpnProblemLoaded.setEditable(false);
         contentPane.add(txtpnProblemLoaded, BorderLayout.CENTER);
