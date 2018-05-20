@@ -24,6 +24,9 @@ public class MainForm extends JFrame {
     private final JFileChooser fileChooser = new JFileChooser("data");
     private MathService math;
     private final JTextPane txtpnProblemLoaded;
+    private LinearProblem currentLP;
+    private final JCheckBox chkPrecision;
+    private final JCheckBox chkMaxIters;
 
     /**
      * Launch the application.
@@ -34,7 +37,7 @@ public class MainForm extends JFrame {
                 try {
                     MainForm frame = new MainForm();
                     frame.initListeners();
-//                    frame.startMath();
+                    frame.startMath();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -47,6 +50,7 @@ public class MainForm extends JFrame {
         math = new MathService();
         Configuration config = new Configuration("config.properties");
         math.setKernelPath(config.getKernelPath());
+        math.setAbsoluteMaxIters(config.getAbsMaxIterations());
         math.start();
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(WindowEvent winEvt) {
@@ -61,12 +65,23 @@ public class MainForm extends JFrame {
             int status = fileChooser.showDialog(MainForm.this, "Open");
             if(status == JFileChooser.APPROVE_OPTION) {
                 File lpFile = fileChooser.getSelectedFile();
-                LinearProblem lp = new LinearProblem();
-                lp.load(lpFile);
-                displayLP(lp);
+                currentLP = new LinearProblem();
+                currentLP.load(lpFile);
+                displayLP(currentLP);
             }
         });
         btnSolve.addActionListener(e -> {
+            if(currentLP != null) {
+                math.setObjective(currentLP.getObjectiveAsMath());
+                math.setConstraints(currentLP.getConstraintsAsMath());
+                math.setPrecision(chkPrecision.isSelected()?txtPrecision.getText():"None");
+                math.setMaxIters(chkMaxIters.isSelected()? Integer.parseInt(txtMaxIters.getText()) :Integer.MAX_VALUE);
+                String status = math.runKarmarkar();
+                writeLineToPane("");
+                writeLineToPane("Status: " + status);
+                writeLineToPane("Iterations: " +math.getIterNum());
+                writeLineToPane("Result: " +math.getLastIteration());
+            }
         });
     }
 
@@ -142,10 +157,10 @@ public class MainForm extends JFrame {
         txtMaxIters.setInputVerifier(new IntegerVerifier().setPositive(true));
         
         JLabel lblStopConditions = new JLabel("Stop Conditions :");
-        
-        JCheckBox chkPrecision = new JCheckBox("Precision");
-        
-        JCheckBox chkMaxIters = new JCheckBox("Max iterations");
+
+        chkPrecision = new JCheckBox("Precision");
+
+        chkMaxIters = new JCheckBox("Max iterations");
         
         JCheckBox chkOptimumFound = new JCheckBox("Optimum found");
         GroupLayout gl_panel_1 = new GroupLayout(panel_1);

@@ -14,6 +14,7 @@ import java.text.MessageFormat;
 public class MathService implements AutoCloseable {
     private String kernelPath;
     private KernelLink kernelLink;
+    private int absMaxIterations = 42;
 
     public void setKernelPath(String kernelPath) {
         this.kernelPath = kernelPath;
@@ -42,6 +43,7 @@ public class MathService implements AutoCloseable {
             kernelLink.discardAnswer();
             String initCmd = IOUtils.toString(getClass().getResourceAsStream("init.m"));
             sendCmd(initCmd);
+            setVar("hardIterMax", String.valueOf(absMaxIterations));
         } catch(MathLinkException e) {
             throw new RuntimeException(e);
         } catch(IOException e) {
@@ -57,11 +59,11 @@ public class MathService implements AutoCloseable {
         }
     }
 
-    public void setObjective(String objective) throws MathLinkException {
+    public void setObjective(String objective) {
         setVar("cf", objective);
     }
 
-    public void setConstraints(String constraints) throws MathLinkException {
+    public void setConstraints(String constraints) {
         setVar("a", constraints);
     }
 
@@ -88,7 +90,7 @@ public class MathService implements AutoCloseable {
         }
     }
 
-    public String runKarmarkar() throws MathLinkException {
+    public String runKarmarkar() {
         try {
             return eval("KAlgorithmNew[]").asString();
         } catch(ExprFormatException e) {
@@ -117,6 +119,6 @@ public class MathService implements AutoCloseable {
     }
 
     public void setAbsoluteMaxIters(int absMaxIterations) {
-        setVar("hardIterMax", String.valueOf(absMaxIterations));
+        this.absMaxIterations = absMaxIterations;
     }
 }

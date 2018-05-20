@@ -21,7 +21,8 @@ omitted*){m, n} = Dimensions[a];  (*'[a]' must be a full array*)
    alp = 2/9;
    iter = 0;
    iters = {};
-   While[iter++ < hardIterMax,
+   While[iter < hardIterMax,
+   iter++;
     x0 = xk;
     xk = KIter[xk, a, cf, alp, r] // N;
     AppendTo[iters, xk];

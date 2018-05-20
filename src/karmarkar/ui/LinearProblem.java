@@ -34,18 +34,29 @@ public class LinearProblem {
     }
 
     public String getObjectiveAsString() {
-        return formatLine(this.objective);
+        return formatLine(this.objective, padding);
     }
 
-    private String formatLine(String[] objective) {
+    private String formatLine(String[] objective, int pad) {
         return Arrays.stream(objective)
-                .map(token -> StringUtils.leftPad(token, padding))
+                .map(token -> StringUtils.leftPad(token, pad))
                 .collect(Collectors.joining(","));
     }
 
     public String getConstraintsAsString() {
+        return getConstraintsAsString(padding);
+    }
+    public String getConstraintsAsString(int padding) {
         return Arrays.stream(constraints)
-                .map(this::formatLine)
+                .map(objective1 -> formatLine(objective1, padding))
                 .collect(Collectors.joining("\n"));
+    }
+
+    public String getObjectiveAsMath() {
+        return "{" + formatLine(this.objective, 0) + "}";
+    }
+
+    public String getConstraintsAsMath() {
+        return "{{" + getConstraintsAsString(0).replace("\n", "},{") + "}}";
     }
 }
