@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="JLink1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/JLink.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
