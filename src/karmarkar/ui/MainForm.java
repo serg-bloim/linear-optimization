@@ -188,10 +188,14 @@ public class MainForm extends JFrame {
 ////        doc = new DefaultStyledDocument();
 ////        txtpnProblemLoaded.setDocument(doc);
         doc=txtpnProblemLoaded.getDocument();
-        txtpnProblemLoaded.setFont(new Font("Consolas", Font.PLAIN, 18));
+        txtpnProblemLoaded.setFont(new Font("Consolas", Font.PLAIN, config.getFontSize()));
         writeLineToPane(config.getOutputText());
         txtpnProblemLoaded.setEditable(false);
-        contentPane.add(txtpnProblemLoaded, BorderLayout.CENTER);
+        JPanel view = new JPanel();
+        view.setLayout(new BorderLayout(0, 0));
+        view.add(txtpnProblemLoaded);
+        JScrollPane scrollPane = new JScrollPane(view);
+        contentPane.add(scrollPane, BorderLayout.CENTER);
     }
 
 

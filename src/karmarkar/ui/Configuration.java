@@ -34,4 +34,8 @@ public class Configuration extends Properties {
     public int getAbsMaxIterations() {
         return Integer.parseInt(getProperty("math.absolute-maxiters"));
     }
+
+    public int getFontSize() {
+        return Integer.parseInt(getProperty("ui.font.size", "14"));
+    }
 }
