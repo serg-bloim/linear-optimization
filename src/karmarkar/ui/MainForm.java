@@ -27,6 +27,7 @@ public class MainForm extends JFrame {
     private LinearProblem currentLP;
     private final JCheckBox chkPrecision;
     private final JCheckBox chkMaxIters;
+    private final JScrollPane scrollPane;
 
     /**
      * Launch the application.
@@ -204,13 +205,13 @@ public class MainForm extends JFrame {
 ////        txtpnProblemLoaded.setDocument(doc);
         doc=txtpnProblemLoaded.getDocument();
         txtpnProblemLoaded.setFont(new Font("Consolas", Font.PLAIN, config.getFontSize()));
-        writeLineToPane(config.getOutputText());
         txtpnProblemLoaded.setEditable(false);
         JPanel view = new JPanel();
         view.setLayout(new BorderLayout(0, 0));
         view.add(txtpnProblemLoaded);
-        JScrollPane scrollPane = new JScrollPane(view);
+        scrollPane = new JScrollPane(view);
         contentPane.add(scrollPane, BorderLayout.CENTER);
+        writeLineToPane(config.getOutputText());
     }
 
 
@@ -225,8 +226,16 @@ public class MainForm extends JFrame {
         try {
             text+="\n";
             doc.insertString(doc.getLength(), text, null);
+            scrollDown();
         } catch(BadLocationException e) {
 
+        }
+    }
+
+    private void scrollDown() {
+        JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
+        if(verticalScrollBar!=null) {
+            verticalScrollBar.setValue(verticalScrollBar.getMaximum());
         }
     }
 }
