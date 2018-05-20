@@ -1,33 +1,29 @@
 package karmarkar.ui;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import javax.swing.GroupLayout;
-import javax.swing.InputVerifier;
+import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
-import java.awt.Color;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.UIManager;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import javax.swing.JTextPane;
-import javax.swing.SwingConstants;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
+import javax.swing.border.EmptyBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.Document;
+import javax.swing.text.PlainDocument;
+import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.io.File;
 
 public class MainForm extends JFrame {
 
+    private final Document doc;
     private JPanel contentPane;
     Configuration config = new Configuration("config.properties");
     private JTextField txtPrecision;
     private JTextField txtMaxIters;
+    private final JButton btnLoad;
+    private final JButton btnSolve;
+    private final JFileChooser fileChooser = new JFileChooser("data");
+    private MathService math;
+    private final JTextPane txtpnProblemLoaded;
 
     /**
      * Launch the application.
@@ -37,12 +33,47 @@ public class MainForm extends JFrame {
             public void run() {
                 try {
                     MainForm frame = new MainForm();
+                    frame.initListeners();
+//                    frame.startMath();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    private void startMath() {
+        math = new MathService();
+        Configuration config = new Configuration("config.properties");
+        math.setKernelPath(config.getKernelPath());
+        math.start();
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(WindowEvent winEvt) {
+                math.close();
+                System.exit(0);
+            }
+        });
+    }
+
+    private void initListeners() {
+        btnLoad.addActionListener(e -> {
+            int status = fileChooser.showDialog(MainForm.this, "Open");
+            if(status == JFileChooser.APPROVE_OPTION) {
+                File lpFile = fileChooser.getSelectedFile();
+                LinearProblem lp = new LinearProblem();
+                lp.load(lpFile);
+                displayLP(lp);
+            }
+        });
+        btnSolve.addActionListener(e -> {
+        });
+    }
+
+    private void displayLP(LinearProblem lp) {
+        clearPane();
+        writeLineToPane("123");
+        writeLineToPane("123");
     }
 
     /**
@@ -65,18 +96,9 @@ public class MainForm extends JFrame {
         panel.setForeground(Color.BLACK);
         contentPane.add(panel, BorderLayout.WEST);
 
-        JButton btnLoad = new JButton("Load");
-        btnLoad.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-        		
-        	}
-        });
+        btnLoad = new JButton("Load");
 
-        JButton btnSolve = new JButton("Solve");
-        btnSolve.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-        	}
-        });
+        btnSolve = new JButton("Solve");
         
         JPanel panel_1 = new JPanel();
         GroupLayout gl_panel = new GroupLayout(panel);
@@ -158,10 +180,30 @@ public class MainForm extends JFrame {
         panel_1.setLayout(gl_panel_1);
         panel.setLayout(gl_panel);
 
-        JTextPane txtpnProblemLoaded = new JTextPane();
+        txtpnProblemLoaded = new JTextPane();
         txtpnProblemLoaded.setContentType("text/html");
-        txtpnProblemLoaded.setText(config.getOutputText());
+//        doc = new DefaultStyledDocument();
+//        txtpnProblemLoaded.setDocument(doc);
+        doc=txtpnProblemLoaded.getDocument();
+        writeLineToPane(config.getOutputText());
         txtpnProblemLoaded.setEditable(false);
         contentPane.add(txtpnProblemLoaded, BorderLayout.CENTER);
+    }
+
+
+    private void clearPane() {
+        try {
+            doc.remove(0, doc.getLength());
+        } catch(BadLocationException e) {
+            e.printStackTrace();
+        }
+    }
+    private void writeLineToPane(String text) {
+        try {
+            text+="\n";
+            doc.insertString(doc.getLength(), text, null);
+        } catch(BadLocationException e) {
+
+        }
     }
 }
