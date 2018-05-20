@@ -62,6 +62,8 @@ public class MainForm extends JFrame {
     }
 
     private void initListeners() {
+        txtPrecision.setText(config.getPrecision());
+        txtMaxIters.setText(config.getMaxIterations());
         btnLoad.addActionListener(e -> {
             int status = fileChooser.showDialog(MainForm.this, "Open");
             if(status == JFileChooser.APPROVE_OPTION) {
@@ -235,7 +237,7 @@ public class MainForm extends JFrame {
     private void scrollDown() {
         JScrollBar verticalScrollBar = scrollPane.getVerticalScrollBar();
         if(verticalScrollBar!=null) {
-            verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+            verticalScrollBar.setValue(Integer.MAX_VALUE);
         }
     }
 }
