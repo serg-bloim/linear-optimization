@@ -30,4 +30,8 @@ public class Configuration extends Properties {
     public String getKernelPath() {
         return getProperty("kernel-path");
     }
+
+    public int getAbsMaxIterations() {
+        return Integer.parseInt(getProperty("math.absolute-maxiters"));
+    }
 }
