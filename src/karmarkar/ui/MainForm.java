@@ -108,11 +108,13 @@ public class MainForm extends JFrame {
         txtPrecision.setText("0.0001");
         txtPrecision.setHorizontalAlignment(SwingConstants.RIGHT);
         txtPrecision.setColumns(10);
+        txtPrecision.setInputVerifier(new DecimalVerifier());
         
         txtMaxIters = new JTextField();
         txtMaxIters.setText("500");
         txtMaxIters.setHorizontalAlignment(SwingConstants.RIGHT);
         txtMaxIters.setColumns(10);
+        txtMaxIters.setInputVerifier(new IntegerVerifier().setPositive(true));
         
         JLabel lblStopConditions = new JLabel("Stop Conditions :");
         
