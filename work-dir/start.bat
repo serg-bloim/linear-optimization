@@ -1,0 +1,1 @@
+java -cp "classes;libs/*" karmarkar.ui.MainForm

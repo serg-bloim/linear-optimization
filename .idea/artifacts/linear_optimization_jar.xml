@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact name="linear-optimization:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/linear_optimization_jar</output-path>
+    <root id="root">
+      <element id="directory" name="libs">
+        <element id="archive" name="linear-optimization.jar">
+          <element id="module-output" name="linear-optimization" />
+        </element>
+        <element id="dir-copy" path="$PROJECT_DIR$/lib" />
+      </element>
+      <element id="dir-copy" path="$PROJECT_DIR$/work-dir" />
+      <element id="directory" name="data">
+        <element id="dir-copy" path="$PROJECT_DIR$/data" />
+      </element>
+      <element id="directory" name="classes">
+        <element id="file-copy" path="$PROJECT_DIR$/src/config.properties" />
+      </element>
+    </root>
+  </artifact>
+</component>

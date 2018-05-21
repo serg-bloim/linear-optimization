@@ -22,6 +22,8 @@ public class MathService implements AutoCloseable {
 
     public void start() {
         try {
+            System.out.println("Kernel path: ");
+            System.out.println(kernelPath);
             kernelLink = MathLinkFactory.createKernelLink("-linkmode launch -linkname \"" + kernelPath + "\"");
             init();
             validateConnection();

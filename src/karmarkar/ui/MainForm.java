@@ -90,6 +90,7 @@ public class MainForm extends JFrame {
                 writeLineToPane("Status: " + status);
                 writeLineToPane("Iterations: " +math.getIterNum());
                 writeLineToPane("Result: " +math.getLastIteration());
+                writeLineToPane("cf: " +math.eval("cf.iters[[-1]]//N").toString());
             }
         });
     }
