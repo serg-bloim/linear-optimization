@@ -28,6 +28,7 @@ public class MainForm extends JFrame {
     private final JCheckBox chkPrecision;
     private final JCheckBox chkMaxIters;
     private final JScrollPane scrollPane;
+    private final JCheckBox chkOptimumFound;
 
     /**
      * Launch the application.
@@ -64,13 +65,17 @@ public class MainForm extends JFrame {
     private void initListeners() {
         txtPrecision.setText(config.getPrecision());
         txtMaxIters.setText(config.getMaxIterations());
+
+        File defaultLp = new File("data/test1.lp");
+        if(defaultLp.exists()) {
+            openLpFile(defaultLp);
+        }
+
         btnLoad.addActionListener(e -> {
             int status = fileChooser.showDialog(MainForm.this, "Open");
             if(status == JFileChooser.APPROVE_OPTION) {
                 File lpFile = fileChooser.getSelectedFile();
-                currentLP = new LinearProblem();
-                currentLP.load(lpFile);
-                displayLP(currentLP);
+                openLpFile(lpFile);
             }
         });
         btnSolve.addActionListener(e -> {
@@ -79,6 +84,7 @@ public class MainForm extends JFrame {
                 math.setConstraints(currentLP.getConstraintsAsMath());
                 math.setPrecision(chkPrecision.isSelected()?txtPrecision.getText():"None");
                 math.setMaxIters(chkMaxIters.isSelected()? Integer.parseInt(txtMaxIters.getText()) :Integer.MAX_VALUE);
+                math.setCheckOptimum(chkOptimumFound.isSelected());
                 String status = math.runKarmarkar();
                 writeLineToPane("");
                 writeLineToPane("Status: " + status);
@@ -86,6 +92,12 @@ public class MainForm extends JFrame {
                 writeLineToPane("Result: " +math.getLastIteration());
             }
         });
+    }
+
+    private void openLpFile(File lpFile) {
+        currentLP = new LinearProblem();
+        currentLP.load(lpFile);
+        displayLP(currentLP);
     }
 
     private void displayLP(LinearProblem lp) {
@@ -164,8 +176,8 @@ public class MainForm extends JFrame {
         chkPrecision = new JCheckBox("Precision");
 
         chkMaxIters = new JCheckBox("Max iterations");
-        
-        JCheckBox chkOptimumFound = new JCheckBox("Optimum found");
+
+        chkOptimumFound = new JCheckBox("Optimum found");
         GroupLayout gl_panel_1 = new GroupLayout(panel_1);
         gl_panel_1.setHorizontalGroup(
         	gl_panel_1.createParallelGroup(Alignment.LEADING)

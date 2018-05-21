@@ -8,13 +8,18 @@ a = {};
 eps = 0.0001;
 itermax = 400;
 hardIterMax = 400;
+breakOnExactSolution = False;
 BreakOnItermax[iter_] := NumberQ[itermax] && iter >= itermax;
 BreakOnVectorDiff[xPrev_, xCur_] := MaxAbs[xCur - xPrev] < Abs[eps];
-BreakOnExactOptimum[x_] := False;
+BreakOnExactOptimum[x_] :=
+  breakOnExactSolution &&
+   IsOptimalKarmarkar[getExactSolution[N[x], restrictions], a, cf];
 KAlgorithmNew[] :=
   Module[{xk, x0, n, m, r, alp, isoptimum = 0,
     cfunc}, (*itermax_integer will be 50 by default if it is \
-omitted*){m, n} = Dimensions[a];  (*'[a]' must be a full array*)
+omitted*)
+   {m, n} = Dimensions[a];  (*'[a]' must be a full array*)
+   restrictions = composeRestrictions[a];
    xk = Table[1/n, {n}]; (*'Table' generates a list of n copies of '1/
    n' so we have a vector (1/n,...1/n) with n elements*)
    r = 1/Sqrt[n*(n - 1)];
@@ -28,7 +33,7 @@ omitted*){m, n} = Dimensions[a];  (*'[a]' must be a full array*)
     AppendTo[iters, xk];
     If[BreakOnItermax[iter], Return["maxiter"]];
     If[BreakOnVectorDiff[x0, xk], Return["vector_diff"]];
-    If[BreakOnExactOptimum[ xk], Return["exact_optimum"]];
+    If[BreakOnExactOptimum[ xk], AppendTo[iters,getExactSolution[N[xk], restrictions]];Return["exact_optimum"]];
     ];
    Return["absolute_maxiter"];
    ];

@@ -99,7 +99,7 @@ public class MathService implements AutoCloseable {
     }
 
     public Object getLastIteration() {
-        return eval("iters[[-1]]").toString();
+        return eval("iters[[-1]]//N").toString();
     }
 
     public int getIterNum() {
@@ -120,5 +120,10 @@ public class MathService implements AutoCloseable {
 
     public void setAbsoluteMaxIters(int absMaxIterations) {
         this.absMaxIterations = absMaxIterations;
+    }
+
+    public void setCheckOptimum(boolean enabled) {
+        String val = (enabled ? Expr.SYM_TRUE : Expr.SYM_FALSE).toString();
+        setVar("breakOnExactSolution", val);
     }
 }
