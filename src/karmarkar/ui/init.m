@@ -6,6 +6,7 @@ Clear["Global`*"];
 cf = {};
 a = {};
 eps = 0.0001;
+alp = 2/9;
 itermax = 400;
 hardIterMax = 400;
 breakOnExactSolution = False;
@@ -15,7 +16,7 @@ BreakOnExactOptimum[x_] :=
   breakOnExactSolution &&
    IsOptimalKarmarkar[getExactSolution[N[x], restrictions], a, cf];
 KAlgorithmNew[] :=
-  Module[{xk, x0, n, m, r, alp, isoptimum = 0,
+  Module[{xk, x0, n, m, r, isoptimum = 0,
     cfunc}, (*itermax_integer will be 50 by default if it is \
 omitted*)
    {m, n} = Dimensions[a];  (*'[a]' must be a full array*)
@@ -23,7 +24,6 @@ omitted*)
    xk = Table[1/n, {n}]; (*'Table' generates a list of n copies of '1/
    n' so we have a vector (1/n,...1/n) with n elements*)
    r = 1/Sqrt[n*(n - 1)];
-   alp = 2/9;
    iter = 0;
    iters = {};
    While[iter < hardIterMax,

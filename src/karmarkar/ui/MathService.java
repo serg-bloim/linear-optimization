@@ -69,7 +69,7 @@ public class MathService implements AutoCloseable {
         setVar("a", constraints);
     }
 
-    private void setVar(String variable, String value) {
+    public void setVar(String variable, String value) {
         try {
             sendCmd(MessageFormat.format(variable + "={0};", value));
         } catch(MathLinkException e) {
@@ -106,7 +106,7 @@ public class MathService implements AutoCloseable {
 
     public int getIterNum() {
         try {
-            return eval("iter").asInt();
+            return eval("iter").asInt()/3+1;
         } catch(ExprFormatException e) {
             throw new RuntimeException(e);
         }

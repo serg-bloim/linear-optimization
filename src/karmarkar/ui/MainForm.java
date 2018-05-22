@@ -54,6 +54,7 @@ public class MainForm extends JFrame {
         math.setKernelPath(config.getKernelPath());
         math.setAbsoluteMaxIters(config.getAbsMaxIterations());
         math.start();
+        math.setVar("alp", config.getProperty("math.alp"));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(WindowEvent winEvt) {
                 math.close();
